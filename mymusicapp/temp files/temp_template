@@ -1,0 +1,16 @@
+ <div id="app">
+    <img src="./assets/icon.png">
+    <h1>{{ msg }}</h1>
+    <h2 >Home</h2>
+    
+    <h2>About App</h2>
+    
+  </div>
+  export default {
+  name: 'app',
+  data () {
+    return {
+      msg: 'Welcome to My Music App'
+    }
+  }
+}
