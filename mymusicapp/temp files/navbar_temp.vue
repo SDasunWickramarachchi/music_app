@@ -29,56 +29,35 @@
 </template>
 
 <script>
-import axios from 'axios';
-
-export default {
-  name: 'Navbar',
-  data() {
+  import axios from 'axios';
+  export default{
+    data() {
     return {
-      searchTerm: '',
-      searchResults: [],
-      loading: false,
-      error: null,
-    };
-  },
-  methods: {
-    async search(event) {
-      const query = event.target.value;
-      if (!query) {
-        this.searchResults = [];
-        return;
-      }
-
-      this.loading = true;
-      this.error = null;
-
-      try {
-        // Get your app's access token from your backend
-        const tokenResponse = await axios.get('http://localhost:3000/token');
-        const accessToken = tokenResponse.data.access_token;
-
-        // Use the token to search Spotify
-        const spotifyResponse = await axios.get(
-          `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track&limit=10`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-
-        this.searchResults = spotifyResponse.data.tracks.items;
-      } catch (err) {
-        this.error = 'Something went wrong: ' + (err.response?.data?.error?.message || err.message);
-        console.error('Search error:', err);
-      } finally {
-        this.loading = false;
-      }
+      error: [] // ✅ define 'error' so you can use 'this.error.push(...)'
+         };
     },
-  },
-};
+    methods:{
+      search(event){
+        var key = event.target.value;
+         axios.get("https://api.spotify.com/v1/search?q="+ key + "&type=track",{
+          headers: {
+            Authorization: "Bearer BQCCJWMzEfhptSc4aQGxLR8yvAiZSG02EnF36gd4KhAjgnqX7UYOIW5mqexzYc-FGXOpe4Km9oyW000vKYgVAKjeOnxL6tkSTT1ToltnW-g41-6KCSNyCiDZbD7h0FVoesKjk2CpGZ4"
+          }
+        })
+          .then(response=> {
+          // handle success
+            console.log(response.data);
+          })
+          .catch(e=>{
+            this.error.push(e);
+            // handle error
+            console.error("Search failed:", e);
+          })
+        console.log (key)
+      }
+    }
+  }
 </script>
-
 
 <style>
 
