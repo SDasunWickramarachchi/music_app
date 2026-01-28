@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const { VueLoaderPlugin } = require('vue-loader');
-const { watch } = require('fs');
 
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
@@ -33,11 +32,8 @@ module.exports = {
         ]
       },
       {
-        test: /\.(png|jpe?g|gif|svg)$/i,
-        type: 'asset/resource',
-        generator: {
-          filename: 'assets/[name][ext]?[hash]'
-        }
+        test: /\.(png|jpg|gif|svg)$/,
+        type: 'asset/resource'
       }
     ]
   },
@@ -51,8 +47,7 @@ module.exports = {
 
   devServer: {
     static: {
-      directory: path.join(__dirname, 'public'), // Make sure /public/index.html exists
-      watch:true,
+      directory: path.join(__dirname, 'public')
     },
     historyApiFallback: true,
     hot: true,
@@ -67,7 +62,7 @@ module.exports = {
     hints: false
   },
 
-  devtool: process.env.NODE_ENV === 'production' ? 'source-map' : 'eval-source-map',
+  devtool: 'eval-source-map',
 
   plugins: [
     new VueLoaderPlugin(),
@@ -77,3 +72,8 @@ module.exports = {
     })
   ]
 };
+
+// Production-specific settings
+if (process.env.NODE_ENV === 'production') {
+  module.exports.devtool = 'source-map';
+}

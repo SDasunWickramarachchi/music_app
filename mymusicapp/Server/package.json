@@ -1,0 +1,22 @@
+{
+  "name": "spotify-token-server",
+  "version": "1.0.0",
+  "description": "Node.js backend to fetch Spotify access token using Client Credentials Flow",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": ["spotify", "access-token", "nodejs", "express"],
+  "author": "Dasun wickramarachchi",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.8",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
